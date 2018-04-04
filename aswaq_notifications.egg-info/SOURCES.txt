@@ -1,0 +1,8 @@
+aswaq_notifications/NotificationClient.py
+aswaq_notifications/__init__.py
+aswaq_notifications.egg-info/PKG-INFO
+aswaq_notifications.egg-info/SOURCES.txt
+aswaq_notifications.egg-info/dependency_links.txt
+aswaq_notifications.egg-info/not-zip-safe
+aswaq_notifications.egg-info/requires.txt
+aswaq_notifications.egg-info/top_level.txt
