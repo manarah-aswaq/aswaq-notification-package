@@ -21,7 +21,7 @@ class NotificationClient(Singleton):
     """
     Wrapper for notifications API
     """
-    BASE_URL = "http://localhost:8000/"
+    BASE_URL = "http://34.246.25.8/"
     CREATE_NOTIFICATIONS_URL = "notifications/api/notifications-requests/"
     CANCEL_NOTIFICATIONS_URL = "notifications/api/notifications-requests/%s/cancel_notification/"
     CREATE_GROUP_URL = "notifications/api/user-token-group/"
