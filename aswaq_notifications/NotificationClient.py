@@ -36,7 +36,7 @@ class NotificationClient(Singleton):
         self.api_token = "Token " + api_token
 
     def send_notifications(self, send_date=None, text=None, image=None, title=None, user_tokens=None,
-                           tokens_group_name=None):
+                           tokens_group_name=None, click_action=None):
         """
         Send notification request to be scheduled on the notifications WS, can be sent to either list of user tokens
         or group of user token
@@ -44,6 +44,7 @@ class NotificationClient(Singleton):
         :param text:Notification body to be sent
         :param image: Notification icon
         :param title:Notification title
+        :param click_action:action to be triggered clickin notification
         :param user_tokens: <List> or <Tuple> of recipients  (Tokens from firebase)
         :param tokens_group_name: Token group to send the notification to instead of user tokens
         :return:
@@ -54,6 +55,7 @@ class NotificationClient(Singleton):
             "text": text or "",
             "image": image or "",
             "title": title or "",
+            "click_action": click_action or "",
         }
         if user_tokens:
             data['user_tokens'] = user_tokens

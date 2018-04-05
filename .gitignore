@@ -64,3 +64,4 @@ celerybeat.pid
 celerybeat-schedule
 reports/
 venv/
+*.egg-info/
