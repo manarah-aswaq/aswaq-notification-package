@@ -21,19 +21,19 @@ class NotificationClient(Singleton):
     """
     Wrapper for notifications API
     """
-    BASE_URL = "http://34.246.25.8/"
     CREATE_NOTIFICATIONS_URL = "notifications/api/notifications-requests/"
     CANCEL_NOTIFICATIONS_URL = "notifications/api/notifications-requests/%s/cancel_notification/"
     CREATE_GROUP_URL = "notifications/api/user-token-group/"
     REMOVE_GROUP_TOKEN_URL = "notifications/api/user-token-group/%s/remove_from_group/"
     ADD_GROUP_TOKEN_URL = "notifications/api/user-token-group/%s/add_to_group/"
 
-    def __init__(self, api_token):
+    def __init__(self, api_token, base_url):
         """
         Set the authorization key for the api
         :param api_token: Api token from the api
         """
         self.api_token = "Token " + api_token
+        self.base_url = base_url
 
     def send_notifications(self, send_date=None, message_data=None, user_tokens=None,
                            tokens_group_name=None):
@@ -57,7 +57,7 @@ class NotificationClient(Singleton):
         if tokens_group_name:
             data['user_token_group'] = tokens_group_name
 
-        result = requests.post(self.BASE_URL + self.CREATE_NOTIFICATIONS_URL, json=data,
+        result = requests.post(self.base_url + self.CREATE_NOTIFICATIONS_URL, json=data,
                                headers={'Authorization': self.api_token})
         return self.proccess_results(result)
 
@@ -85,7 +85,7 @@ class NotificationClient(Singleton):
         :param reference_id: Notification reference ID
         :return:
         """
-        result = requests.post(self.BASE_URL + self.CANCEL_NOTIFICATIONS_URL % reference_id,
+        result = requests.post(self.base_url + self.CANCEL_NOTIFICATIONS_URL % reference_id,
                                headers={'Authorization': self.api_token})
         return self.proccess_results(result)
 
@@ -100,7 +100,7 @@ class NotificationClient(Singleton):
         assert isinstance(name, str)
         data = {"name": name or "", 'user_tokens': user_tokens or []}
 
-        result = requests.post(self.BASE_URL + self.CREATE_GROUP_URL, json=data,
+        result = requests.post(self.base_url + self.CREATE_GROUP_URL, json=data,
                                headers={'Authorization': self.api_token})
         return self.proccess_results(result)
 
@@ -113,7 +113,7 @@ class NotificationClient(Singleton):
         """
         assert not isinstance(user_tokens, str)
         data = {'user_tokens': user_tokens or []}
-        result = requests.post(self.BASE_URL + self.REMOVE_GROUP_TOKEN_URL % group_name, json=data,
+        result = requests.post(self.base_url + self.REMOVE_GROUP_TOKEN_URL % group_name, json=data,
                                headers={'Authorization': self.api_token})
         return self.proccess_results(result)
 
@@ -126,6 +126,6 @@ class NotificationClient(Singleton):
         """
         assert not isinstance(user_tokens, str)
         data = {'user_tokens': user_tokens or []}
-        result = requests.post(self.BASE_URL + self.ADD_GROUP_TOKEN_URL % group_name, json=data,
+        result = requests.post(self.base_url + self.ADD_GROUP_TOKEN_URL % group_name, json=data,
                                headers={'Authorization': self.api_token})
         return self.proccess_results(result)

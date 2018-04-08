@@ -1,6 +1,6 @@
 from aswaq_notifications import NotificationClient
 
-client = NotificationClient("0828a6e1cd8b6a5cb1e422070713c71226fd5e3c")
+client = NotificationClient("0828a6e1cd8b6a5cb1e422070713c71226fd5e3c", 'http://34.246.25.8/')
 notification = client.send_notifications(
     message_data='{"url": "","body": {"action": "product","type": 2,"value": {"type": "product","value": "3113"}},"message": "hi"}',
     user_tokens=[
