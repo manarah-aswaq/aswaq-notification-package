@@ -1,5 +1,6 @@
 # works in Python 2 & 3
 import datetime
+import warnings
 
 import requests
 
@@ -35,25 +36,51 @@ class NotificationClient(Singleton):
         self.api_token = "Token " + api_token
         self.base_url = base_url
 
-    def send_notifications(self, send_date=None, message_data=None, user_tokens=None,
+    def send_notifications(self,
+                           title,
+                           body,
+                           message_data,
+                           send_date=None,
+                           user_tokens=None,
+                           ios_user_tokens=None,
+                           android_user_tokens=None,
                            tokens_group_name=None):
         """
         Send notification request to be scheduled on the notifications WS, can be sent to either list of user tokens
         or group of user token
         :param send_date:Date to be sent (leave empty for datetime.datetime.utcnow())
         :param message_data:Notification json data
-        :param user_tokens: <List> or <Tuple> of recipients  (Tokens from firebase)
+        :param user_tokens: <List> or <Tuple> of recipients  (Tokens from firebase) (deprecated)
+        :param ios_user_tokens: <List> or <Tuple> of recipients  (Ios Tokens from firebase)
+        :param android_user_tokens: <List> or <Tuple> of recipients  (android Tokens from firebase)
         :param tokens_group_name: Token group to send the notification to instead of user tokens
         :return:
         """
-        assert not isinstance(user_tokens, str)
+        assert not isinstance(ios_user_tokens, str)
         assert message_data
         data = {
             "send_date": send_date or str(datetime.datetime.utcnow()),
-            "message_data": message_data or "",
+            "message_data": message_data,
+            "title": title,
+            "body": body
         }
         if user_tokens:
+            assert not isinstance(user_tokens, str)
+            warnings.warn(
+                "using 'user_token' deprecated and will be removed in the"
+                " next version, use 'ios_user_tokens' and/or android_user_tokens instead",
+                DeprecationWarning)
             data['user_tokens'] = user_tokens
+        if ios_user_tokens:
+            assert not isinstance(ios_user_tokens, str)
+            if 'user_tokens' not in data:
+                data['user_tokens'] = {}
+            data['user_tokens']['IOS'] = ios_user_tokens
+        if android_user_tokens:
+            assert not isinstance(android_user_tokens, str)
+            if 'user_tokens' not in data:
+                data['user_tokens'] = {}
+            data['user_tokens']['IOS'] = android_user_tokens
         if tokens_group_name:
             data['user_token_group'] = tokens_group_name
 
