@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='aswaq_notifications',
-      version='0.1.1',
+      version='0.1.2',
       description='A python wrapper around aswaq notifications layer handler API',
       url='',
       author='AHMADIGA',
