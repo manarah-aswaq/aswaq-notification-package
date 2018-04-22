@@ -80,7 +80,7 @@ class NotificationClient(Singleton):
             assert not isinstance(android_user_tokens, str)
             if 'user_tokens' not in data:
                 data['user_tokens'] = {}
-            data['user_tokens']['IOS'] = android_user_tokens
+            data['user_tokens']['AND'] = android_user_tokens
         if tokens_group_name:
             data['user_token_group'] = tokens_group_name
 
