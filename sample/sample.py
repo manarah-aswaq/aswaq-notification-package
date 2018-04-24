@@ -1,6 +1,6 @@
 from aswaq_notifications import NotificationClient
 
-client = NotificationClient("0828a6e1cd8b6a5cb1e422070713c71226fd5e3c", 'http://localhost:8000/')
+client = NotificationClient("<api_token>", 'http://localhost:8000/')
 notification = client.send_notifications(
     body="body1",
     title="title",
